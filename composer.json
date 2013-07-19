@@ -1,6 +1,7 @@
 {
     "require": {
-        "silex/silex": "1.*",
-		"moriony/silex-mongo-provider": "*"
+        "silex/silex": "1.*",        
+		"devture/silex-provider-doctrine-mongodb": "*",
+		"twig/twig": "1.13.*"
     }
 }

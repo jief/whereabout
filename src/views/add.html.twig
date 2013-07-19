@@ -1,0 +1,57 @@
+{% extends 'layout.html.twig' %}
+
+{% block container_content %}
+	<h2>Add your Where About for the week {{ currentWeek }}</h2>
+
+  <form class="form-horizontal" action="save" method="post">
+    <input type="hidden" name="o" value="{{ offset }}">
+    <div class="control-group">
+      <label class="control-label" for="inputWho">Who</label>
+      <div class="controls">
+        <input type="text" name="who" id="inputWho" placeholder="Who are you">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputMondayAM">Monday</label>
+      <div class="controls">
+        <input type="text" name="monday[am]" id="inputMondayAM" placeholder="AM or all the day">
+        <input type="text" name="monday[pm]" id="inputMondayPM" placeholder="PM">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputTuesdayAM">Tuesday</label>
+      <div class="controls">
+        <input type="text" name="tuesday[am]" id="inputTuesdayAM" placeholder="AM or all the day">
+        <input type="text" name="tuesday[pm]" id="inputTuesdayPM" placeholder="PM">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputWednesdayAM">Wednesday</label>
+      <div class="controls">
+        <input type="text" name="wednesday[am]" id="inputWednesdayAM" placeholder="AM or all the day">
+        <input type="text" name="wednesday[pm]]" id="inputWednesdayPM" placeholder="PM">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputThursdayAM">Thursday</label>
+      <div class="controls">
+        <input type="text" name="thursday[am]" id="inputThursdayAM" placeholder="AM or all the day">
+        <input type="text" name="thursday[pm]" id="inputThursdayPM" placeholder="PM">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputFridayAM">Friday</label>
+      <div class="controls">
+        <input type="text" name="friday[am]" id="inputFridayAM" placeholder="AM or all the day">
+        <input type="text" name="friday[pm]" id="inputFridayPM" placeholder="PM">
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">      
+        <button type="submit" class="btn btn-info">Save</button>
+        <button type="reset" class="btn btn-danger">Reset</button>
+        &nbsp;&nbsp;&nbsp;<a href="./?o={{ offset }}">Back</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+
+{% block container_content %}
+	<h1>Where Abouts</h1>
+	<h3>Week {{ currentWeek }} - from {{ monday }} to {{ friday }}</h3>
+
+	<div class="row">
+			<div class="span10">
+				<div class="pagination pagination-small">
+					<ul>
+						<li><a href="./?o={{ offset -1 }}" rel="nofollow"><< Preview week</a></li>
+						<li class="{%if offset == 0%}disabled{%endif%}" rel="nofollow"><a href="./?o=0">Current week</a></li>
+						<li><a href="./?o={{ offset +1 }}" rel="nofollow">Next week >></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="span2">
+				{% if currentWeek >= "now" | date("W") %}
+					<a class="btn btn-info" href="add?o={{ offset }}">Add</a>
+				{% endif %}
+			</div>
+	</div>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+		  		<th>#</th>
+		  		<th>Moday</th>
+		  		<th>Tuesday</th>
+		  		<th>Wednesday</th>
+		  		<th>Thursday</th>
+		  		<th>Friday</th>
+		  		<th>Actions</th>
+		  	</tr>
+		</thead>
+		{%if values %}
+		<tbody>
+			{% for value in values %}
+			<tr>
+				<td>{{ value.who }}</td>
+				<td>{{ value.days.monday.am }} {% if value.days.monday.pm %} | {{ value.days.monday.pm }} {% endif %}</td>
+				<td>{{ value.days.tuesday.am }} {% if value.days.tuesday.pm %} | {{ value.days.tuesday.pm }} {% endif %}</td>
+				<td>{{ value.days.wednesday.am }} {% if value.days.wednesday.pm %} | {{ value.days.wednesday.pm }} {% endif %}</td>
+				<td>{{ value.days.thursday.am }} {% if value.days.thursday.pm %} | {{ value.days.thursday.pm }} {% endif %}</td>
+				<td>{{ value.days.friday.am }} {% if value.days.friday.pm %} | {{ value.days.friday.pm }} {% endif %}</td>	
+				<td>
+					<div class="btn-group">
+  				<a class="btn btn-mini btn-warning dropdown-toggle" data-toggle="dropdown" href="#">Action <span class="caret"></span></a>
+  				<ul class="dropdown-menu">
+    			<li><a href="edit/{{ value._id }}?o={{ offset }}">Edit</a></li>
+    			<li><a href="delete/{{ value._id }}?o={{ offset }}">Delete</a></li>
+  				</ul>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}		
+		</tbody>
+		{% endif %}
+	</table>
+{% endblock %}
