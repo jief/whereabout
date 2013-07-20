@@ -8,34 +8,25 @@ $app['debug'] = true;
 $app->register(new \Devture\SilexProvider\DoctrineMongoDB\ServicesProvider('mongodb', array()));
 
 $app['db'] = $app->share(function ($app) {
-	return $app['mongodb.connection']->selectDatabase('whereabout');
+  return $app['mongodb.connection']->selectDatabase('whereabout');
 });
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/../src/views',
-    'twig.options' => array('cache' => __DIR__.'/../src/cache')
+  'twig.path' => __DIR__.'/../src/views',
+  'twig.options' => array('cache' => __DIR__.'/../src/cache')
 ));
 
 $app->get('/', function (Silex\Application $app)  {
   $offset = $app['request']->query->get('o', 0);
-  $currentWeek = date('W', strtotime( $offset . " week")); 
+  $currentWeek = date('W', strtotime($offset . " week")); 
   $key = date('Y-W', strtotime($offset . " week"));
   $dayOfWeek = date('N');
- 	$monday = ($dayOfWeek == 1) ? date('d/m/Y', strtotime( $offset . " week")) : date('d/m/Y', strtotime( $offset . " week last Monday"));
-
-  if($dayOfWeek == 5) {
-    $friday = date('d/m/Y', strtotime( $offset . " week"));
-  } elseif($dayOfWeek < 5) {
-    $friday = date('d/m/Y', strtotime( $offset . " week next friday"));
-  } else {
-    $friday = date('d/m/Y', strtotime( $offset . " week last friday"));
-  }
+  $monday = ($dayOfWeek == 1) ? strtotime( $offset . " week") : strtotime( $offset . " week last Monday");  
   
   $data = array(
     "currentWeek" => $currentWeek,
     "offset" => $offset,
-    "monday" => $monday,
-    "friday" => $friday,
+    "monday" => $monday,   
     "values" => $app['db']->where->find(array('week' => $key)),
   );
 

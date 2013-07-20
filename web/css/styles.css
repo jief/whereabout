@@ -18,3 +18,8 @@ input.error {
 .head-actions {
 	margin-bottom: 20px;
 }
+
+th.current, 
+td.current {
+  background-color: #d9edf7;
+}

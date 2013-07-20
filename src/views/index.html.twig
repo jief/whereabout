@@ -2,7 +2,7 @@
 
 {% block container_content %}
 	<h1>Where Abouts</h1>
-	<h3>Week {{ currentWeek }} - from {{ monday }} to {{ friday }}</h3>
+	<h3>Week {{ currentWeek }} - from {{ monday|date('d/m/Y') }} to {{ (monday + 86400 * 4)|date('d/m/Y') }}</h3>
 
 	<div class="row head-actions">
 			<div class="span9">
@@ -24,11 +24,11 @@
 		<thead>
 			<tr>
 		  		<th>#</th>
-		  		<th>Moday</th>
-		  		<th>Tuesday</th>
-		  		<th>Wednesday</th>
-		  		<th>Thursday</th>
-		  		<th>Friday</th>
+		  		<th>Moday {{ monday|date('d') }}</th>
+		  		<th>Tuesday {{ (monday + 86400)|date('d') }}</th>
+		  		<th>Wednesday {{ (monday + 86400 * 2)|date('d') }}</th>
+		  		<th>Thursday {{ (monday + 86400 * 3)|date('d') }}</th>
+		  		<th>Friday {{ (monday + 86400 * 4)|date('d') }}</th>
 		  		<th>Actions</th>
 		  	</tr>
 		</thead>
