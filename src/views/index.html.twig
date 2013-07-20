@@ -23,13 +23,13 @@
 	<table class="table table-condensed">
 		<thead>
 			<tr>
-		  		<th>#</th>
+		  		<th width="10%">#</th>
 		  		<th>Moday {{ monday|date('d') }}</th>
 		  		<th>Tuesday {{ (monday + 86400)|date('d') }}</th>
 		  		<th>Wednesday {{ (monday + 86400 * 2)|date('d') }}</th>
 		  		<th>Thursday {{ (monday + 86400 * 3)|date('d') }}</th>
 		  		<th>Friday {{ (monday + 86400 * 4)|date('d') }}</th>
-		  		<th>Actions</th>
+		  		<th width="10%">Actions</th>
 		  	</tr>
 		</thead>
 		{%if values %}
