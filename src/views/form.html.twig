@@ -1,15 +1,15 @@
 {% extends 'layout.html.twig' %}
 
 {% block container_content %}
-	<h2>Add your Where About for the week {{ currentWeek }}</h2>
+	<h2>{% if value is defined %}Edit{% else %}Add{% endif %} your Where About for the week {{ currentWeek }}</h2>
 
-  <form class="form-horizontal" action="{{ app.request.basepath }}/save" method="post">
+  <form class="form-horizontal" id="where-form" action="{{ app.request.basepath }}/save" method="post">
     <input type="hidden" name="o" value="{{ offset }}">
     <input type="hidden" name="_id" value="{% if value is defined %}{{ value._id }}{% endif %}">
     <div class="control-group">
-      <label class="control-label" for="inputWho">Who</label>
+      <label class="control-label" for="inputWho">Who <span class="required">*</span></label>
       <div class="controls">
-        <input type="text" name="who" id="inputWho" value="{% if value is defined %}{{ value.who }}{% endif %}" placeholder="Who are you">
+        <input type="text" name="who" id="inputWho" class="required" value="{% if value is defined %}{{ value.who }}{% endif %}" placeholder="Who are you">
       </div>
     </div>
     <div class="control-group">

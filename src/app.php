@@ -49,12 +49,12 @@ $app->get('/add', function (Silex\Application $app)  {
     'offset' => $offset,
     'currentWeek' => $currentWeek,
   );
-  return $app['twig']->render('add.html.twig', $data);
+  return $app['twig']->render('form.html.twig', $data);
 });
 
 $app->post('/save', function (Silex\Application $app) {
   $values = $app['request']->request->all();  
-  
+
   $key = date('Y-W', strtotime($values['o'] . " week"));
   $data = array(
     'week' => $key, 
@@ -92,7 +92,7 @@ $app->get('edit/{id}', function(Silex\Application $app, $id) {
     'value' => $value,
   );
 
-  return $app['twig']->render('add.html.twig', $data);
+  return $app['twig']->render('form.html.twig', $data);
 
 });
 

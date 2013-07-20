@@ -4,8 +4,8 @@
 	<h1>Where Abouts</h1>
 	<h3>Week {{ currentWeek }} - from {{ monday }} to {{ friday }}</h3>
 
-	<div class="row">
-			<div class="span10">
+	<div class="row head-actions">
+			<div class="span9">
 				<div class="pagination pagination-small">
 					<ul>
 						<li><a href="{{ app.request.basepath }}/?o={{ offset -1 }}" rel="nofollow"><< Preview week</a></li>
@@ -14,9 +14,9 @@
 					</ul>
 				</div>
 			</div>
-			<div class="span2">
+			<div class="span3 right">
 				{% if currentWeek >= "now" | date("W") %}
-					<a class="btn btn-info" href="{{ app.request.basepath }}/add?o={{ offset }}">Add</a>
+					<a class="btn btn-info" href="{{ app.request.basepath }}/add?o={{ offset }}"><i class="icon-plus icon-white"></i> Add</a>
 				{% endif %}
 			</div>
 	</div>
@@ -46,8 +46,8 @@
 					<div class="btn-group">
   				<a class="btn btn-mini btn-warning dropdown-toggle" data-toggle="dropdown" href="#">Action <span class="caret"></span></a>
   				<ul class="dropdown-menu">
-    			<li><a href="{{ app.request.basepath }}/edit/{{ value._id }}?o={{ offset }}">Edit</a></li>
-    			<li><a href="{{ app.request.basepath }}/delete/{{ value._id }}?o={{ offset }}">Delete</a></li>
+    			<li><a href="{{ app.request.basepath }}/edit/{{ value._id }}?o={{ offset }}" class="edit">Edit</a></li>
+    			<li><a href="{{ app.request.basepath }}/delete/{{ value._id }}?o={{ offset }}" class="delete">Delete</a></li>
   				</ul>
 					</div>
 				</td>
