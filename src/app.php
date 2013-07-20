@@ -54,6 +54,7 @@ $app->get('/add', function (Silex\Application $app)  {
 
 $app->post('/save', function (Silex\Application $app) {
   $values = $app['request']->request->all();  
+  
   $key = date('Y-W', strtotime($values['o'] . " week"));
   $data = array(
     'week' => $key, 
@@ -66,8 +67,15 @@ $app->post('/save', function (Silex\Application $app) {
       'friday' => $values['friday'],
     )
   );
+
   $collection = $app['db']->where;
-  $collection->insert($data);
+  if(isset($values['_id']) && $values['_id'] != '') { 
+    $data['_updated'] = time();
+    $collection->update(array('_id' => new MongoId($values['_id'])), array('$set' => $data)); 
+  } else {
+    $data['_created'] = time();
+    $collection->insert($data);
+  }
   return $app->redirect('./?o=' . $values['o']);
 });
 
@@ -76,15 +84,13 @@ $app->get('edit/{id}', function(Silex\Application $app, $id) {
   $currentWeek = date('W', strtotime( $offset . " week")); 
 
   $collection = $app['db']->where;
-  $value = $collection->find(array('_id' => new MongoId($id)));
+  $value = $collection->findOne(array('_id' => new MongoId($id)));
 
   $data = array(
     'offset' => $offset,
     'currentWeek' => $currentWeek,
     'value' => $value,
   );
-
-  print_r($record);
 
   return $app['twig']->render('add.html.twig', $data);
 
