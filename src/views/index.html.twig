@@ -1,59 +1,59 @@
 {% extends 'layout.html.twig' %}
 
 {% block container_content %}
-	<h1>Where Abouts</h1>
-	<h3>Week {{ currentWeek }} - from {{ monday|date('d/m/Y') }} to {{ (monday + 86400 * 4)|date('d/m/Y') }}</h3>
+<h1>Where Abouts</h1>
+<h3>Week {{ currentWeek }} - from {{ monday|date('d/m/Y') }} to {{ (monday + 86400 * 4)|date('d/m/Y') }}</h3>
 
-	<div class="row head-actions">
-			<div class="span9">
-				<div class="pagination pagination-small">
-					<ul>
-						<li><a href="{{ app.request.basepath }}/?o={{ offset -1 }}" rel="nofollow"><< Preview week</a></li>
-						<li class="{%if offset == 0%}disabled{%endif%}" rel="nofollow"><a href="{{ app.request.basepath }}/?o=0">Current week</a></li>
-						<li><a href="{{ app.request.basepath }}/?o={{ offset +1 }}" rel="nofollow">Next week >></a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="span3 right">
-				{% if currentWeek >= "now" | date("W") %}
-					<a class="btn btn-info" href="{{ app.request.basepath }}/add?o={{ offset }}"><i class="icon-plus icon-white"></i> Add</a>
-				{% endif %}
-			</div>
-	</div>
-	<table class="table table-condensed">
-		<thead>
-			<tr>
-		  		<th width="10%">#</th>
-		  		<th>Moday {{ monday|date('d') }}</th>
-		  		<th>Tuesday {{ (monday + 86400)|date('d') }}</th>
-		  		<th>Wednesday {{ (monday + 86400 * 2)|date('d') }}</th>
-		  		<th>Thursday {{ (monday + 86400 * 3)|date('d') }}</th>
-		  		<th>Friday {{ (monday + 86400 * 4)|date('d') }}</th>
-		  		<th width="10%">Actions</th>
-		  	</tr>
-		</thead>
-		{%if values %}
-		<tbody>
-			{% for value in values %}
-			<tr>
-				<td>{{ value.who }}</td>
-				<td>{{ value.days.monday.am }} {% if value.days.monday.pm %} | {{ value.days.monday.pm }} {% endif %}</td>
-				<td>{{ value.days.tuesday.am }} {% if value.days.tuesday.pm %} | {{ value.days.tuesday.pm }} {% endif %}</td>
-				<td>{{ value.days.wednesday.am }} {% if value.days.wednesday.pm %} | {{ value.days.wednesday.pm }} {% endif %}</td>
-				<td>{{ value.days.thursday.am }} {% if value.days.thursday.pm %} | {{ value.days.thursday.pm }} {% endif %}</td>
-				<td>{{ value.days.friday.am }} {% if value.days.friday.pm %} | {{ value.days.friday.pm }} {% endif %}</td>	
-				<td>
-					<div class="btn-group">
-  				<a class="btn btn-mini btn-warning dropdown-toggle" data-toggle="dropdown" href="#">Action <span class="caret"></span></a>
-  				<ul class="dropdown-menu">
-    			<li><a href="{{ app.request.basepath }}/edit/{{ value._id }}?o={{ offset }}" class="edit">Edit</a></li>
-    			<li><a href="{{ app.request.basepath }}/delete/{{ value._id }}?o={{ offset }}" class="delete">Delete</a></li>
-  				</ul>
-					</div>
-				</td>
-			</tr>
-			{% endfor %}		
-		</tbody>
-		{% endif %}
-	</table>
+<div class="row head-actions">
+  <div class="span9">
+    <div class="pagination pagination-small">
+      <ul>
+        <li><a href="{{ app.request.basepath }}/?o={{ offset -1 }}" rel="nofollow"><< Preview week</a></li>
+        <li class="{%if offset == 0%}disabled{%endif%}" rel="nofollow"><a href="{{ app.request.basepath }}/?o=0">Current week</a></li>
+        <li><a href="{{ app.request.basepath }}/?o={{ offset +1 }}" rel="nofollow">Next week >></a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="span3 right">
+    {% if currentWeek >= "now" | date("W") %}
+      <a class="btn btn-info add" href="{{ app.request.basepath }}/add?o={{ offset }}"><i class="icon-plus icon-white"></i> Add</a>
+    {% endif %}
+  </div>
+</div>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th width="10%">&nbsp;</th>
+      <th>Moday {{ monday|date('d') }}</th>
+      <th>Tuesday {{ (monday + 86400)|date('d') }}</th>
+      <th>Wednesday {{ (monday + 86400 * 2)|date('d') }}</th>
+      <th>Thursday {{ (monday + 86400 * 3)|date('d') }}</th>
+      <th>Friday {{ (monday + 86400 * 4)|date('d') }}</th>
+      <th width="10%">&nbsp;</th>
+    </tr>
+  </thead>
+  {%if values %}
+  <tbody>
+    {% for value in values %}
+    <tr>
+      <td>{{ value.who }}</td>
+      <td>{{ value.days.monday.am }} {% if value.days.monday.pm %} | {{ value.days.monday.pm }} {% endif %}</td>
+      <td>{{ value.days.tuesday.am }} {% if value.days.tuesday.pm %} | {{ value.days.tuesday.pm }} {% endif %}</td>
+      <td>{{ value.days.wednesday.am }} {% if value.days.wednesday.pm %} | {{ value.days.wednesday.pm }} {% endif %}</td>
+      <td>{{ value.days.thursday.am }} {% if value.days.thursday.pm %} | {{ value.days.thursday.pm }} {% endif %}</td>
+      <td>{{ value.days.friday.am }} {% if value.days.friday.pm %} | {{ value.days.friday.pm }} {% endif %}</td>  
+      <td class="action">
+        <div class="btn-group">
+        <a class="btn btn-mini btn-warning dropdown-toggle" data-toggle="dropdown" href="#">Action <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{{ app.request.basepath }}/edit/{{ value._id }}?o={{ offset }}" class="edit">Edit</a></li>
+          <li><a href="{{ app.request.basepath }}/delete/{{ value._id }}?o={{ offset }}" class="delete">Delete</a></li>
+        </ul>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}    
+  </tbody>
+  {% endif %}
+</table>
 {% endblock %}

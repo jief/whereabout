@@ -3,5 +3,5 @@ $(document).ready(function(){
 
 	$('a.delete').click(function() {
 		return confirm('Sure ?');
-	});	
+	});  
 });

@@ -1,8 +1,9 @@
 <?php
+use Silex\Application;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$app = new Silex\Application();
+$app = new Application();
 $app['debug'] = true;
 
 $app->register(new \Devture\SilexProvider\DoctrineMongoDB\ServicesProvider('mongodb', array()));
@@ -16,7 +17,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
   'twig.options' => array('cache' => __DIR__.'/../src/cache')
 ));
 
-$app->get('/', function (Silex\Application $app)  {
+$app->get('/', function (Application $app)  {
   $offset = $app['request']->query->get('o', 0);
   $currentWeek = date('W', strtotime($offset . " week")); 
   $key = date('Y-W', strtotime($offset . " week"));
@@ -27,23 +28,24 @@ $app->get('/', function (Silex\Application $app)  {
     "currentWeek" => $currentWeek,
     "offset" => $offset,
     "monday" => $monday,   
-    "values" => $app['db']->where->find(array('week' => $key)),
+    "values" => $app['db']->where->find(array('week' => $key))->sort(array('_created' => 1)),
   );
 
   return $app['twig']->render('index.html.twig',  $data);
 });
 
-$app->get('/add', function (Silex\Application $app)  {
+$app->get('/add', function (Application $app)  {
   $offset = $app['request']->query->get('o', 0);
   $currentWeek = date('W', strtotime( $offset . " week")); 
   $data = array(
     'offset' => $offset,
     'currentWeek' => $currentWeek,
   );
+
   return $app['twig']->render('form.html.twig', $data);
 });
 
-$app->post('/save', function (Silex\Application $app) {
+$app->post('/save', function (Application $app) {
   $values = $app['request']->request->all();  
 
   $key = date('Y-W', strtotime($values['o'] . " week"));
@@ -67,10 +69,11 @@ $app->post('/save', function (Silex\Application $app) {
     $data['_created'] = time();
     $collection->insert($data);
   }
+
   return $app->redirect('./?o=' . $values['o']);
 });
 
-$app->get('edit/{id}', function(Silex\Application $app, $id) {
+$app->get('edit/{id}', function(Application $app, $id) {
   $offset = $app['request']->query->get('o', 0);
   $currentWeek = date('W', strtotime( $offset . " week")); 
 
@@ -84,13 +87,13 @@ $app->get('edit/{id}', function(Silex\Application $app, $id) {
   );
 
   return $app['twig']->render('form.html.twig', $data);
-
 });
 
-$app->get('/delete/{id}', function(Silex\Application $app, $id) {
+$app->get('/delete/{id}', function(Application $app, $id) {
   $offset = $app['request']->query->get('o', 0);
   $collection = $app['db']->where;
   $collection->remove(array('_id' => new MongoId($id)));
+
   return $app->redirect('../?o=' . $offset);
 });
 

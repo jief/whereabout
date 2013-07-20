@@ -23,3 +23,15 @@ th.current,
 td.current {
   background-color: #d9edf7;
 }
+
+td.action {
+  text-align: right;
+}
+
+td.action a {
+  text-align: left;
+}
+
+hr.footer {
+  margin-top: 50px;
+}
